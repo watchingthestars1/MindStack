@@ -2,24 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MindStack Flashcards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindStack – Flashcards</title>
   <style>
     body {
-      background: #121212;
-      color: #eee;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #1e1e1e, #2c2c2c);
+      color: #f8f8f8;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
+      padding: 40px 20px;
     }
 
     nav {
       background: #1e1e1e;
-      padding: 10px 20px;
+      padding: 12px 20px;
       display: flex;
       gap: 20px;
       justify-content: center;
@@ -31,7 +30,7 @@
     }
 
     nav a {
-      color: #eee;
+      color: #f8f8f8;
       text-decoration: none;
       font-weight: 600;
       font-size: 1.1rem;
@@ -40,181 +39,85 @@
     }
 
     nav a:hover {
-      color: #4caf50;
-      background: rgba(76, 175, 80, 0.15);
+      background-color: rgba(255, 255, 255, 0.1);
     }
 
     h1 {
-      margin: 20px 0;
       font-size: 2.5rem;
-      color: #4caf50;
+      margin-bottom: 20px;
     }
 
     form {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      max-width: 400px;
+      flex-direction: column;
       width: 100%;
-      margin-bottom: 30px;
+      max-width: 500px;
+      gap: 15px;
     }
 
-    input[type="text"] {
+    input, textarea {
       padding: 10px;
-      border-radius: 6px;
-      border: none;
-      width: calc(50% - 5px);
-      background: #222;
-      color: #eee;
       font-size: 1rem;
-      box-shadow: 0 0 5px #333 inset;
+      border: none;
+      border-radius: 6px;
+      outline: none;
     }
 
-    input::placeholder {
-      color: #888;
+    input {
+      height: 40px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
     }
 
     button {
-      background: #4caf50;
-      border: none;
+      background-color: #4caf50;
       color: white;
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
       transition: background 0.3s ease;
     }
 
     button:hover {
-      background: #45a049;
-    }
-
-    .flashcards {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .card {
-      background: #1e1e1e;
-      border-radius: 10px;
-      perspective: 1000px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.7);
-      height: 150px;
-    }
-
-    .inner-card {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-      border-radius: 10px;
-    }
-
-    .card.flipped .inner-card {
-      transform: rotateY(180deg);
-    }
-
-    .front, .back {
-      position: absolute;
-      backface-visibility: hidden;
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 15px;
-      box-sizing: border-box;
-      font-size: 1.2rem;
-      text-align: center;
-    }
-
-    .front {
-      background: #292929;
-      font-weight: 700;
-    }
-
-    .back {
-      background: #4caf50;
-      color: #121212;
-      transform: rotateY(180deg);
-      font-weight: 600;
-    }
-
-    @media (max-width: 500px) {
-      input[type="text"] {
-        width: 100%;
-      }
-
-      form {
-        flex-direction: column;
-        gap: 15px;
-      }
+      background-color: #43a047;
     }
   </style>
 </head>
 <body>
+
   <nav>
     <a href="home.html">Home</a>
     <a href="flashcards.html">Flashcards</a>
   </nav>
 
-  <h1>MindStack Flashcards</h1>
+  <h1>Create a Flashcard</h1>
 
   <form id="flashcardForm">
-    <input type="text" id="termInput" placeholder="Enter term" required />
-    <input type="text" id="meaningInput" placeholder="Enter meaning" required />
-    <button type="submit">Add</button>
+    <input type="text" id="term" placeholder="Enter term" required />
+    <textarea id="definition" placeholder="Enter definition" required></textarea>
+    <button type="submit">Add Flashcard</button>
   </form>
-
-  <div class="flashcards" id="flashcardsContainer"></div>
 
   <script>
     const form = document.getElementById('flashcardForm');
-    const termInput = document.getElementById('termInput');
-    const meaningInput = document.getElementById('meaningInput');
-    const container = document.getElementById('flashcardsContainer');
 
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
-      const term = termInput.value.trim();
-      const meaning = meaningInput.value.trim();
-      if (!term || !meaning) return;
-
-      const card = document.createElement('div');
-      card.className = 'card';
-
-      const inner = document.createElement('div');
-      inner.className = 'inner-card';
-
-      const front = document.createElement('div');
-      front.className = 'front';
-      front.textContent = term;
-
-      const back = document.createElement('div');
-      back.className = 'back';
-      back.textContent = meaning;
-
-      inner.appendChild(front);
-      inner.appendChild(back);
-      card.appendChild(inner);
-
-      card.addEventListener('click', () => {
-        card.classList.toggle('flipped');
-      });
-
-      container.appendChild(card);
-
-      termInput.value = '';
-      meaningInput.value = '';
-      termInput.focus();
+      const term = document.getElementById('term').value.trim();
+      const definition = document.getElementById('definition').value.trim();
+      if (term && definition) {
+        // Flashcard logic (can store in localStorage or backend later)
+        form.reset();
+      }
     });
   </script>
+
 </body>
 </html>
+
