@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MindStack Home</title>
   <style>
-    /* Navigation bar styles */
+    /* Navigation bar */
     nav {
       background: #1e1e1e;
       padding: 10px 20px;
@@ -34,22 +34,32 @@
       background: rgba(76, 175, 80, 0.15);
     }
 
-    /* Dark theme for body */
+    /* Body */
     body {
       margin: 0;
       background: #121212;
       color: #eee;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       flex-direction: column;
-      padding: 20px;
-      overflow: hidden;
+      align-items: center;
+      overflow-x: hidden;
     }
 
-    /* The welcome message style */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 900px;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+    }
+
+    /* Welcome header */
     .welcome {
       position: relative;
       font-size: 3rem;
@@ -71,9 +81,13 @@
         0 0 20px #81c784,
         0 0 40px #388e3c;
       overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .welcome:hover {
+      transform: scale(1.05);
     }
 
-    /* Ripple container */
+    /* Ripple */
     .ripple {
       position: absolute;
       border-radius: 50%;
@@ -84,12 +98,78 @@
       mix-blend-mode: screen;
       z-index: 1;
     }
-
     @keyframes ripple-effect {
       to {
         transform: scale(4);
         opacity: 0;
       }
+    }
+
+    /* Info cards container */
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      width: 100%;
+    }
+
+    /* Each card */
+    .card {
+      background: #1e1e1e;
+      border-radius: 15px;
+      padding: 25px 20px;
+      box-shadow:
+        0 4px 15px rgba(76, 175, 80, 0.2),
+        inset 0 0 10px rgba(76, 175, 80, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+      color: #c8facc;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      user-select: none;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow:
+        0 8px 30px rgba(76, 175, 80, 0.6),
+        inset 0 0 20px rgba(76, 175, 80, 0.3);
+      color: #a2e17d;
+    }
+
+    /* Card icon placeholder */
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #4caf50;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 40px;
+      padding: 15px 10px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      user-select: none;
+    }
+
+    /* Animate cards fade-in */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      animation: fadeInUp 0.7s ease forwards;
     }
 
   </style>
@@ -101,7 +181,32 @@
   <a href="flashcards.html">Flashcards</a>
 </nav>
 
-<h1 class="welcome" id="welcomeText">Welcome to MindStack,<br>the free flashcard website</h1>
+<main>
+  <h1 class="welcome" id="welcomeText">Welcome to MindStack,<br>the free flashcard website</h1>
+
+  <section class="info-cards">
+    <div class="card" style="animation-delay: 0.1s;">
+      <div class="card-icon">📚</div>
+      <div>Create and organise your own flashcards easily.</div>
+    </div>
+    <div class="card" style="animation-delay: 0.3s;">
+      <div class="card-icon">⚡</div>
+      <div>Fast and lightweight design with modern UI.</div>
+    </div>
+    <div class="card" style="animation-delay: 0.5s;">
+      <div class="card-icon">🔒</div>
+      <div>Your data stays private — no saving or tracking.</div>
+    </div>
+    <div class="card" style="animation-delay: 0.7s;">
+      <div class="card-icon">🌙</div>
+      <div>Dark theme for comfortable night use.</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 MindStack &nbsp;•&nbsp; Built with ❤️ and JavaScript
+</footer>
 
 <script>
   const welcomeText = document.getElementById('welcomeText');
