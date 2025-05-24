@@ -2,148 +2,137 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MindStack Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindStack – Home</title>
   <style>
     body {
       margin: 0;
-      background-color: #121212;
-      color: #eee;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #222831, #393e46);
       overflow-x: hidden;
+      min-height: 100vh;
+      color: #f8f8f8;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      align-items: center;
     }
 
     nav {
-      background-color: #1e1e1e;
+      background: #1e1e1e;
+      padding: 12px 20px;
       display: flex;
-      justify-content: center;
-      padding: 15px;
       gap: 20px;
+      justify-content: center;
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.7);
       position: sticky;
       top: 0;
-      z-index: 10;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      z-index: 100;
     }
 
     nav a {
       color: #eee;
       text-decoration: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: background 0.3s;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 8px 12px;
+      border-radius: 6px;
     }
 
     nav a:hover {
-      background-color: #333;
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
-      position: relative;
-    }
-
-    .welcome {
-      font-size: 3rem;
-      font-weight: 900;
-      background: linear-gradient(45deg, #81c784, #388e3c);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 5px #4caf50, 0 0 20px #2e7d32;
-      cursor: pointer;
-      user-select: none;
-      position: relative;
-      z-index: 1;
-    }
-
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      transform: scale(0);
-      animation: ripple-effect 600ms linear;
-      background-color: rgba(76, 175, 80, 0.4);
-      pointer-events: none;
-      mix-blend-mode: screen;
-    }
-
-    @keyframes ripple-effect {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
-    }
-
-    .doodles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .doodle {
-      position: absolute;
-      font-size: 2rem;
-      opacity: 0.1;
-      animation: float 20s linear infinite;
+      background-color: rgba(76, 175, 80, 0.15);
       color: #4caf50;
     }
 
-    @keyframes float {
-      0% { transform: translateY(100vh) rotate(0deg); }
-      100% { transform: translateY(-100vh) rotate(360deg); }
+    .container {
+      text-align: center;
+      padding: 60px 20px;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #4caf50;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #ccc;
+      max-width: 600px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    .button {
+      margin-top: 30px;
+      background-color: #4caf50;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #43a047;
+    }
+
+    /* Doodle animations */
+    .doodle {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      opacity: 0.2;
+      animation: floatUp 20s linear infinite;
+    }
+
+    .doodle:nth-child(even) {
+      animation-duration: 25s;
+      width: 30px;
+    }
+
+    .doodle img {
+      width: 100%;
+      height: 100%;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
+
   <nav>
-    <a href="index.html">Home</a>
+    <a href="home.html">Home</a>
     <a href="flashcards.html">Flashcards</a>
   </nav>
 
-  <main>
-    <h1 class="welcome" id="welcomeText">Welcome to MindStack,<br>the free flashcard website</h1>
-    <div class="doodles" id="doodles"></div>
-  </main>
+  <div class="container">
+    <h1>Welcome to MindStack</h1>
+    <p>Your mental wellness companion. Create, view, and revise flashcards to support your wellbeing journey.</p>
+    <a href="flashcards.html" class="button">Start Revising</a>
+  </div>
 
-  <script>
-    const welcomeText = document.getElementById('welcomeText');
-    welcomeText.addEventListener('click', e => {
-      const rect = welcomeText.getBoundingClientRect();
-      const ripple = document.createElement('span');
-      ripple.className = 'ripple';
-      const size = Math.max(rect.width, rect.height);
-      ripple.style.width = ripple.style.height = `${size}px`;
-      ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
-      ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
-      welcomeText.appendChild(ripple);
-      ripple.addEventListener('animationend', () => ripple.remove());
-    });
+  <!-- Doodles (emoji-based or icons) -->
+  <div class="doodle" style="left: 10%; animation-delay: 0s;"><img src="https://twemoji.maxcdn.com/v/latest/72x72/1f4da.png" alt="book" /></div>
+  <div class="doodle" style="left: 30%; animation-delay: 4s;"><img src="https://twemoji.maxcdn.com/v/latest/72x72/1f49c.png" alt="heart" /></div>
+  <div class="doodle" style="left: 50%; animation-delay: 2s;"><img src="https://twemoji.maxcdn.com/v/latest/72x72/1f4a1.png" alt="idea" /></div>
+  <div class="doodle" style="left: 70%; animation-delay: 6s;"><img src="https://twemoji.maxcdn.com/v/latest/72x72/1f64f.png" alt="gratitude" /></div>
+  <div class="doodle" style="left: 90%; animation-delay: 1s;"><img src="https://twemoji.maxcdn.com/v/latest/72x72/1f4aa.png" alt="strength" /></div>
 
-    // Add floating doodles
-    const doodles = document.getElementById('doodles');
-    const emojis = ['📚', '💡', '🧠', '✏️', '📖', '📝'];
-    for (let i = 0; i < 25; i++) {
-      const el = document.createElement('div');
-      el.className = 'doodle';
-      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      el.style.left = `${Math.random() * 100}vw`;
-      el.style.top = `${Math.random() * 100}vh`;
-      el.style.fontSize = `${Math.random() * 2 + 1}rem`;
-      el.style.animationDuration = `${15 + Math.random() * 15}s`;
-      doodles.appendChild(el);
-    }
-  </script>
 </body>
 </html>
