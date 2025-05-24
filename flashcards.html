@@ -5,36 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MindStack Flashcards</title>
   <style>
-    /* Navigation bar */
-    nav {
-      background: #1e1e1e;
-      padding: 10px 20px;
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.7);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    nav a {
-      color: #eee;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: color 0.3s ease;
-      padding: 8px 12px;
-      border-radius: 6px;
-      user-select: none;
-    }
-
-    nav a:hover {
-      color: #4caf50;
-      background: rgba(76, 175, 80, 0.15);
-    }
-
-    /* Body */
     body {
       background: #121212;
       color: #eee;
@@ -47,9 +17,35 @@
       min-height: 100vh;
     }
 
+    nav {
+      background: #1e1e1e;
+      padding: 10px 20px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: #eee;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+
+    nav a:hover {
+      color: #4caf50;
+      background: rgba(76, 175, 80, 0.15);
+    }
+
     h1 {
-      margin-bottom: 20px;
-      font-weight: 700;
+      margin: 20px 0;
       font-size: 2.5rem;
       color: #4caf50;
     }
@@ -58,18 +54,17 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 30px;
       justify-content: center;
+      max-width: 400px;
       width: 100%;
-      max-width: 500px;
+      margin-bottom: 30px;
     }
 
     input[type="text"] {
       padding: 10px;
       border-radius: 6px;
       border: none;
-      width: 100%;
-      max-width: 220px;
+      width: calc(50% - 5px);
       background: #222;
       color: #eee;
       font-size: 1rem;
@@ -100,7 +95,7 @@
       flex-direction: column;
       gap: 20px;
       width: 100%;
-      max-width: 500px;
+      max-width: 400px;
     }
 
     .card {
@@ -152,10 +147,11 @@
       font-weight: 600;
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 500px) {
       input[type="text"] {
         width: 100%;
       }
+
       form {
         flex-direction: column;
         gap: 15px;
@@ -164,9 +160,8 @@
   </style>
 </head>
 <body>
-
   <nav>
-    <a href="index.html">Home</a>
+    <a href="home.html">Home</a>
     <a href="flashcards.html">Flashcards</a>
   </nav>
 
@@ -178,9 +173,7 @@
     <button type="submit">Add</button>
   </form>
 
-  <div class="flashcards" id="flashcardsContainer">
-    <!-- Flashcards go here -->
-  </div>
+  <div class="flashcards" id="flashcardsContainer"></div>
 
   <script>
     const form = document.getElementById('flashcardForm');
@@ -223,6 +216,5 @@
       termInput.focus();
     });
   </script>
-
 </body>
 </html>
